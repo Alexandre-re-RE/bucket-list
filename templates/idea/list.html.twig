@@ -5,6 +5,12 @@
     <h1>Latest ideas</h1>
     <div class="ideas-list">
 
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     {% for idea in ideas %}
 
         <a href="{{ path('idea_detail', {'id': idea.id}) }}" title="More details on {{ idea.title }}">
