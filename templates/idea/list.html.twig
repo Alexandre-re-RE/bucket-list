@@ -13,8 +13,8 @@
 
     {% for idea in ideas %}
 
-        <a href="{{ path('idea_detail', {'id': idea.id}) }}" title="More details on {{ idea.title }}">
-            {{ idea.title }}
+        <a href="{{ path('idea_detail', {'id': idea.getId}) }}" title="More details on {{ idea.title }}">
+            {{ idea.title }} from category <strong>{{idea.category.getName}}</strong>
         </a>
 
     {% endfor %}
