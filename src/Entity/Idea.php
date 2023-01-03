@@ -2,139 +2,105 @@
 
 namespace App\Entity;
 
+use App\Repository\IdeaRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\IdeaRepository")
- */
+#[ORM\Entity(repositoryClass: IdeaRepository::class)]
 class Idea
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=250)
-     * @Assert\NotBlank
-     */
-    private $title;
+    #[ORM\Column(length: 255)]
+    private ?string $title = null;
 
-    /**
-     * @var string
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank
-     */
-    private $description;
+    #[ORM\Column(length: 255)]
+    private ?string $description = null;
 
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank
-     */
-    private $author;
+    #[ORM\Column(length: 255)]
+    private ?string $author = null;
 
-    /**
-     * @var boolean
-     * @ORM\Column(type="boolean")
-     */
-    private $isPublished;
+    #[ORM\Column]
+    private ?bool $isPublished = null;
 
-    /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
-     */
-    private $dateCreated;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $dateCreated = null;
 
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+    #[ORM\ManyToOne(inversedBy: 'ideas')]
+    private ?Category $category = null;
 
-    /**
-     * @return string
-     */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     */
-    public function setTitle(string $title)
+    public function setTitle(string $title): self
     {
         $this->title = $title;
+
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     */
-    public function setDescription(string $description)
+    public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAuthor(): string
+    public function getAuthor(): ?string
     {
         return $this->author;
     }
 
-    /**
-     * @param string $author
-     */
-    public function setAuthor(string $author)
+    public function setAuthor(string $author): self
     {
         $this->author = $author;
+
+        return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPublished(): bool
+    public function isIsPublished(): ?bool
     {
         return $this->isPublished;
     }
 
-    /**
-     * @param bool $isPublished
-     */
-    public function setIsPublished(bool $isPublished)
+    public function setIsPublished(bool $isPublished): self
     {
         $this->isPublished = $isPublished;
+
+        return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDateCreated(): \DateTime
+    public function getDateCreated(): ?\DateTimeInterface
     {
         return $this->dateCreated;
     }
 
-    /**
-     * @param \DateTime $dateCreated
-     */
-    public function setDateCreated(\DateTime $dateCreated)
+    public function setDateCreated(\DateTimeInterface $dateCreated): self
     {
         $this->dateCreated = $dateCreated;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
     }
 }
