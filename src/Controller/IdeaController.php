@@ -9,9 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class IdeaController extends AbstractController
 {
+
     /**
      * @Route("/ideas", name="idea_list")
      */
@@ -36,6 +38,7 @@ class IdeaController extends AbstractController
 
     /**
      * @Route("/ideas/add", name="idea_add")
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function add(EntityManagerInterface $em, Request $request)
     {

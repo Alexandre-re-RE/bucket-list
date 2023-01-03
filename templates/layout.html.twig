@@ -20,8 +20,22 @@
                 <ul>
                     <li><a href="{{ path("home") }}" title="Bucket-List | Home">Home</a></li>
                     <li><a href="{{ path("idea_list") }}" title="Latest ideas">Latest ideas</a></li>
-                    <li><a href="{{ path("idea_add") }}" title="Latest ideas">Create ideas</a></li>
+
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li><a href="{{ path("idea_add") }}" title="Latest ideas">Create ideas</a></li>
+                    {% endif %}
                     <li><a href="{{ path("about_us") }}" title="Latest ideas">About us</a></li>
+
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li><a href="{{ path("app_logout") }}" title="Latest ideas">Logout</a></li>
+                    {% else %}
+                        <li><a href="{{ path("app_login") }}" title="Latest ideas">login</a></li>
+                        <li><a href="{{ path("app_register") }}" title="Latest ideas">register</a></li>
+                    {% endif %}
+
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        Hello {{app.user.username}}
+                    {% endif %}
                 </ul>
             </nav>
         </header>
