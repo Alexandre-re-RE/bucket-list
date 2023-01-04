@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Entity\Idea;
 use App\Form\IdeaType;
+use App\Service\CensuratorService;
+use App\Service\MessageGeneratorService;
 use DateTime;
 use Doctrine\DBAL\Types\BooleanType;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,7 +42,7 @@ class IdeaController extends AbstractController
      * @Route("/ideas/add", name="idea_add")
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
-    public function add(EntityManagerInterface $em, Request $request)
+    public function add(EntityManagerInterface $em, Request $request, CensuratorService $censuratorService)
     {
         $idea = new Idea();
 
@@ -50,6 +52,10 @@ class IdeaController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /**@var Idea $idea */
             $idea = $form->getData();
+
+            $idea->setTitle($censuratorService->purify($idea->getTitle()));
+            $idea->setDescription($censuratorService->purify($idea->getDescription()));
+            $idea->setAuthor($censuratorService->purify($idea->getAuthor()));
 
             $idea->setDateCreated(new DateTime());
 
