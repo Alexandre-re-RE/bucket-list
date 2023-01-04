@@ -11,7 +11,13 @@ class CensuratorService {
         "seins",
     ];
 
-    public function purify(string $textToPurify)
+    /**
+     * purify shit text function
+     *
+     * @param string $textToPurify
+     * @return string
+     */
+    public function purify(string $textToPurify): string
     {
         foreach(self::NWORD_LIST as $word) {
             $textToPurify = str_replace($word, "***", $textToPurify);
